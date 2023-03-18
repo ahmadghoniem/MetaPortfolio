@@ -5,35 +5,38 @@ import Card from "./Card";
 
 const projects = [
   {
-    title: "React Space",
+    title: "Tenzies App",
     description:
-      "Handy tool belt to create amazing AR components in a React app, with redux integration via middleware️",
-    imageSrc: "../images/photo1.jpg",
+      "The Tenzies game App is a React project built from scratch as part of the Scrimba React course. it includes a leaderboard that display ranking based on number of rolls, taken time or both!",
+    imageSrc: "../images/1.jpg",
+    link: "https://tenziesgho.vercel.app/",
   },
   {
-    title: "React Infinite Scroll",
+    title: "Notes App",
     description:
-      "A scrollable bottom sheet with virtualisation support, native animations at 60 FPS and fully implemented in JS land 🔥️",
-    imageSrc: "../images/photo2.jpg",
+      "The Notes App is a React project built from scratch as part of the Scrimba React course. It includes features such as creating, updating, and deleting notes, as well as the ability to change the theme and note name.",
+    imageSrc: "../images/2.jpg",
+    link: "https://notesappgho.vercel.app/",
   },
   {
-    title: "Photo Gallery",
-    description:
-      "A One-stop shop for photographers to share and monetize their photos, allowing them to have a second source of income",
-    imageSrc: "../images/photo3.jpg",
+    title: "Quizzical App",
+    description: `Built using React from scratch as part of scrimba course, the Quizzical App lets you customize the number of questions, difficulty, and category. You can also choose whether to reveal the answers before or after answering all the questions. Additionally, you can star questions and take a quiz solely with them!. `,
+    imageSrc: "../images/3.jpg",
+    link: "https://quizzicalgho.vercel.app/",
   },
   {
-    title: "Event planner",
+    title: "Chesters NFT",
     description:
-      "A mobile application for leisure seekers to discover unique events and activities in their city with a few taps",
-    imageSrc: "../images/photo4.jpg",
+      "built with React from scratch 𝕮𝖍𝖊𝖘𝖙𝖊𝖗𝖘 is a Community driven NFT project that's still in the making where you get to pick which NFTs will be purchased with project's funds and airdropped back to holderss from top tier projects to small buildooors! you can take a sneakpeak on how the revealing process would be after the mint",
+    imageSrc: "../images/4.jpg",
+    link: "https://chesters.vercel.app/",
   },
 ];
 
 const ProjectsSection = () => {
   return (
     <FullScreenSection
-      backgroundColor="#14532d"
+      backgroundColor="#019689"
       isDarkBackground
       p={8}
       alignItems="flex-start"
@@ -53,6 +56,7 @@ const ProjectsSection = () => {
             title={project.title}
             description={project.description}
             imageSrc={project.imageSrc}
+            link={project.link}
           />
         ))}
       </Box>
