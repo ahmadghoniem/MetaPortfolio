@@ -39,6 +39,8 @@ const socialElements = socials.map((e, i) => (
   </Box>
 ));
 const Header = () => {
+  const headerRef = useRef(null);
+
   const handleClick = (e) => {
     e.preventDefault();
     const id = e.currentTarget.hash;
@@ -50,7 +52,26 @@ const Header = () => {
       });
     }
   };
+  useEffect(() => {
+    let prevScrollPos = window.scrollY;
 
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      const headerElement = headerRef.current;
+
+      headerElement.style.transform =
+        prevScrollPos > currentScrollPos
+          ? "translateY(0)"
+          : "translateY(-200px)";
+
+      prevScrollPos = currentScrollPos;
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <Box
       position="fixed"
@@ -59,6 +80,7 @@ const Header = () => {
       right={0}
       zIndex={1}
       translateY={0}
+      ref={headerRef}
       transitionProperty="transform"
       transitionDuration=".3s"
       transitionTimingFunction="ease-in-out"

@@ -22,22 +22,40 @@ const LandingSection = () => {
   const { isLoading, response, submit } = useSubmit();
   const { onOpen } = useAlertContext();
 
-  const { handleBlur, handleChange, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues: {
-        firstName: "",
-        email: "",
-        type: "",
-        comment: "",
-      },
-      onSubmit: (values, actions) => {
-        console.log(JSON.stringify(values, null, 2));
-        submit("url", values);
-        onOpen(response.type, response.message);
-        actions.resetForm();
-      },
-      validationSchema: ContactSchema,
-    });
+  const {
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    getFieldProps,
+    resetForm,
+    values,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues: {
+      firstName: "",
+      email: "",
+      type: "",
+      comment: "",
+    },
+    onSubmit: (values, actions) => {
+      console.log(JSON.stringify(values, null, 2));
+      submit("url", values);
+      /*       onOpen(response.type, response.message);
+      actions.resetForm(); */
+    },
+    validationSchema: ContactSchema,
+  });
+
+  useEffect(() => {
+    if (response) {
+      onOpen(response.type, response.message);
+      if (response.type === "success") {
+        resetForm();
+      }
+    }
+  }, [response]);
+
   let { firstName, email, type, comment } = values;
   return (
     <FullScreenSection
@@ -53,59 +71,57 @@ const LandingSection = () => {
         <Box p={6} rounded="md" w="100%">
           <form onSubmit={handleSubmit}>
             <VStack spacing={4}>
-              <FormControl isInvalid={errors.firstName && touched.firstName}>
+              <FormControl isInvalid={!!errors.firstName && touched.firstName}>
                 <FormLabel htmlFor="firstName">Name</FormLabel>
                 <Input
                   id="firstName"
                   name="firstName"
-                  value={firstName}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
+                  {...getFieldProps("firstName")}
                 />
                 <FormErrorMessage>{errors.firstName}</FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={errors.email && touched.email}>
+              <FormControl isInvalid={!!errors.email && touched.email}>
                 <FormLabel htmlFor="email">Email Address</FormLabel>
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  value={email}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
+                  {...getFieldProps("email")}
                 />
                 <FormHelperText color="white">
                   We'll never share your email.
                 </FormHelperText>
                 <FormErrorMessage>{errors.email}</FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={errors.type && touched.type}>
+              <FormControl isInvalid={!!errors.type && touched.type}>
                 <FormLabel htmlFor="type">Type of enquiry</FormLabel>
-                <Select
-                  id="type"
-                  name="type"
-                  value={type}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                >
-                  <option value="">--please select--</option>
-                  <option value="hireMe">Freelance project proposal</option>
-                  <option value="openSource">
+                <Select id="type" name="type" {...getFieldProps("type")}>
+                  <option style={{ background: "#512DA8" }} value="">
+                    --please select--
+                  </option>
+                  <option style={{ background: "#512DA8" }} value="hireMe">
+                    Freelance project proposal
+                  </option>
+                  <option style={{ background: "#512DA8" }} value="openSource">
                     Open source consultancy session
                   </option>
-                  <option value="other">Other</option>
+                  <option style={{ background: "#512DA8" }} value="other">
+                    Other
+                  </option>
                 </Select>
                 <FormErrorMessage>{errors.type}</FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={errors.comment && touched.comment}>
+              <FormControl isInvalid={!!errors.comment && touched.comment}>
                 <FormLabel htmlFor="comment">Your message</FormLabel>
                 <Textarea
                   id="comment"
                   name="comment"
                   height={250}
-                  onChange={handleChange}
+                  maxLength={250}
+                  /*onChange={handleChange}
                   onBlur={handleBlur}
-                  value={comment}
+                  value={comment} */
+                  {...getFieldProps("comment")}
                 />
                 <FormErrorMessage>{errors.comment}</FormErrorMessage>
               </FormControl>
